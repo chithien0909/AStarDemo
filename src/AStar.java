@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.plaf.SliderUI;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,6 +8,7 @@ import java.util.Scanner;
 public class AStar {
     // X : ROW
     // Y: COLUMN
+	static ShowForm form = null;
     static final
         int
             VALUE_WALL = 100,
@@ -53,7 +56,7 @@ public class AStar {
 
             src_x = scanner.nextInt ();
             src_y = scanner.nextInt ();
-
+            
             dst_x = scanner.nextInt ();
             dst_y = scanner.nextInt ();
 
@@ -93,8 +96,7 @@ public class AStar {
         }
     }
 
-    public static
-    boolean deploy () {
+    public static boolean deploy () throws Exception{
 
         int src_index = getIndex(src_x, src_y);
         int dst_index = getIndex(dst_x, dst_y);
@@ -112,9 +114,9 @@ public class AStar {
 
             min = VALUE_INFINITY;
             int where = 0;
-
+            
             for (int i = 0; i<open_list.size(); i++){
-                int gVal = G[open_list.get(i)];
+                int gVal = F[open_list.get(i)];
                 if (min > gVal) {
                     where = i;
                     focus_index = open_list.get (i);
@@ -122,27 +124,49 @@ public class AStar {
                 }
             }
 
+            int srcX = focus_index / col;
+            int srcY = focus_index % col;
+            
             if (focus_index == dst_index) {
                 return true;
             }
 
             open_list.remove(where);
             isClose [focus_index] = true;
-
+            
+            result [srcX][srcY] = -5;
+            Thread.sleep(10);
+            SwingUtilities.invokeLater(new Runnable() {				
+				@Override
+				public void run() {
+					form.updateView();									
+				}
+			});
+            
             for (int i = 0; i</*_x_ver.length*/ 4; i++){
-
-                int X = (focus_index / col) + _x_ver[i];
-                int Y = (focus_index % col) + _y_hor[i];
+                int X = srcX + _x_ver[i];
+                int Y = srcY + _y_hor[i];
                 if ((isInRange(X, Y))) {
                     int index = getIndex(X, Y);
                     if (!isClose[index]) {
                         if (G[index] == VALUE_INFINITY) {
+                        	Thread.sleep(10);
                             open_list.add(index);  // add if it is unchecked
+                            result [X][Y] = -4;
+                            
+                            SwingUtilities.invokeLater(new Runnable() {				
+								@Override
+								public void run() {
+									form.updateView();									
+								}
+							});
+                                                        
                         }
-                        if (G[focus_index] + 1 < G[index]){ // default walking value is 1
-                            G[index] = G[focus_index] + 1;
+                        
+                        if (G[focus_index] + 1 < G[index]){ // default walking value is 1                            
+                        	G[index] = G[focus_index] + 1;
                             F[index] = G[index] + H[index];
-                            prev[index] = focus_index;
+                            prev[index] = focus_index;                        
                         }
                     }
                 }
@@ -161,16 +185,15 @@ public class AStar {
             dst_index = prev[dst_index];
             s = "(" + (dst_index/col) + ", " + (dst_index % col) + ")" + "\n" + s;
         } while (dst_index != src_index);
-
     }
 
-    public static
-    void setPath () {
+    public static void setPath () {
 
         int src_index = getIndex(src_x, src_y);
         int dst_index = getIndex(dst_x, dst_y);
 
         result [dst_index/col][dst_index % col] = -3;
+        
         do {
             dst_index = prev[dst_index];
             result [dst_index/col][dst_index % col] = -1;
@@ -178,20 +201,28 @@ public class AStar {
             result [dst_index/col][dst_index % col] = -2;
     }
 
-    public void clearPath () {
-
-    }
+//    public void clearPath () {
+//    	
+//    }
+    
     public static void main (String[] args){
         init ();
-        long time = System.currentTimeMillis();
-        if (deploy()) {
-            setPath();
-            System.out.print("Total time: "+(System.currentTimeMillis() - time));
-            ShowForm form = new ShowForm(result, 800, 600);
-            form.setVisible(true);
-            form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        } else {
-            System.out.print ("No way to reach target");
-        }
+//        long time = System.currentTimeMillis();        
+        form = new ShowForm(result, 800, 600);
+        form.setVisible(true);
+//        setPath();
+        Thread thread = new Thread() {
+        	public void run () {
+        		try {
+        			deploy ();
+        		} catch (Exception e) {
+        			
+        		}
+        		
+        		setPath ();
+        		form.updateView ();
+        	}
+        };        
+        thread.start();      
     }
 }
