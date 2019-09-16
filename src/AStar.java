@@ -71,30 +71,26 @@ public class AStar {
                     isClose [i] = true;
                 else isClose [i] = false;
             }
-
             scanner.close ();
 
-            H = new int [cell_count];
-            F = new int [cell_count];
-            G = new int [cell_count];
+            H = new int [cell_count]; //Heuristic
+            F = new int [cell_count]; //Uniform_Min_Cost (Evaluation Func.)
+            G = new int [cell_count]; //F + Heuristic
             int x = 0, y = 0;
             for (int i = 0; i<cell_count; i++){
-                H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1;
+                H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; //Heuristic value (Manhattan Distance)
                 y++;
                 if (y>=col) {
                     y = 0;
                     x ++;
                 }
-
                 G[i] = F[i] = VALUE_INFINITY;
             }
-
             prev = new int[cell_count];
         } catch (Exception e) {
             System.out.println (" Error: " + e.getMessage());
             System.exit(-1); // exit immediately
         }
-
     }
 
     public static
@@ -109,8 +105,8 @@ public class AStar {
         F [src_index] = H[src_index];
         G [src_index] = 0;
         int
-                min,
-                focus_index = 0;
+            min,
+            focus_index = 0;
 
         while (open_list.size() > 0){ // con cai de xet
 
@@ -119,7 +115,6 @@ public class AStar {
 
             for (int i = 0; i<open_list.size(); i++){
                 int gVal = G[open_list.get(i)];
-
                 if (min > gVal) {
                     where = i;
                     focus_index = open_list.get (i);
@@ -130,7 +125,6 @@ public class AStar {
             if (focus_index == dst_index) {
                 return true;
             }
-
 
             open_list.remove(where);
             isClose [focus_index] = true;
@@ -153,10 +147,7 @@ public class AStar {
                     }
                 }
             }
-
-
         }
-
         return false;
     }
 
@@ -196,12 +187,11 @@ public class AStar {
         if (deploy()) {
             setPath();
             System.out.print("Total time: "+(System.currentTimeMillis() - time));
-            ShowForm form = new ShowForm(result, 600, 600);
+            ShowForm form = new ShowForm(result, 800, 600);
             form.setVisible(true);
             form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         } else {
             System.out.print ("No way to reach target");
         }
-
     }
 }
