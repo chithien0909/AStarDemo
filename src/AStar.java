@@ -82,6 +82,7 @@ public class AStar {
             int x = 0, y = 0;
             for (int i = 0; i<cell_count; i++){
                 H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; //Heuristic value (Manhattan Distance)
+//            	H[i] = (int)Math.sqrt(Math.pow(x-dst_x, 2) + Math.pow(y-dst_y, 2));
                 y++;
                 if (y>=col) {
                     y = 0;
@@ -90,6 +91,8 @@ public class AStar {
                 G[i] = F[i] = VALUE_INFINITY;
             }
             prev = new int[cell_count];
+            result[src_x][src_y] = -2;
+            result[dst_x][dst_y] = -3;
         } catch (Exception e) {
             System.out.println (" Error: " + e.getMessage());
             System.exit(-1); // exit immediately
