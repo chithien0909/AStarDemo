@@ -15,8 +15,8 @@ public class ShowForm extends JFrame {
     	
         @Override
         public void paint (Graphics g) {
+        	
             super.paint(g);
-
             each_height = getHeight()/ A.length;
             each_width = getWidth() / A[0].length;
             for (int i = 0; i < A.length; i++)
@@ -28,27 +28,41 @@ public class ShowForm extends JFrame {
                             color = Color.GRAY;
                             break;
                         case -1:
-                            color = Color.green;
+                            color = Color.GREEN; // source
                             break;
                         case -2:
                             color = Color.BLUE;
                             break;
                         case -3:
                             color = Color.RED; // dest
-                            break;
+                            break;                      
+                        case -4:
+                        	color = Color.CYAN;
+                        	break;
+                        case -5:
+                        	color = Color.DARK_GRAY;
+                        	break;
                     }
 
                     g.setColor(color);
                     g.fillRect(j * each_width, i * each_height, each_width - 1, each_height - 1);
                 }
         }
-
     }
-
+    
+    
+    public void setContent (int[][] content) {
+    	A = content;
+    }
+    
+    public void updateView () {
+    	this.getContentPane().repaint();
+    }
+    
     public ShowForm(int[][] content, int width, int height){
         super("A* path finding");
         setSize(width, height);
-        A = content;
+        setContent (content);
         setBackground(Color.BLACK);
 
         MyContentPane pane = new MyContentPane();
