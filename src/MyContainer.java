@@ -26,6 +26,8 @@ class MyContainer extends JComponent {
             
             each_height = getHeight()/ A.length;
             each_width = getWidth() / A[0].length;
+            int sync = Math.min(each_height, each_width);
+            each_height = each_width = sync;
             for (int i = 0; i < A.length; i++)
                 for (int j = 0; j < A[0].length; j++) {
                     Color color = Color.WHITE;

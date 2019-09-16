@@ -42,7 +42,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	public void init () {
 	    try {
 	
-	        Scanner scanner = new Scanner(new File("Map2.inp"));
+	        Scanner scanner = new Scanner(new File("Map3.inp"));
 	        row = scanner.nextInt ();
 	        col = scanner.nextInt ();
 	
@@ -67,6 +67,8 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	            else 
 	            	isClose [i] = false;
 	        }
+	        
+	        result[dst_x][dst_y] = -3;
 	
 	        scanner.close ();
 	
@@ -190,6 +192,11 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	    do {
 	        dst_index = prev[dst_index];
 	        result [dst_index/col][dst_index % col] = -1;
+	        try {
+	        	simulate ();
+	        } catch (Exception e) {
+	        	
+	        }
 	    } while (dst_index != src_index);
 	        result [dst_index/col][dst_index % col] = -2;
 	        

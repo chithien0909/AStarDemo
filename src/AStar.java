@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 
 public class AStar {
 	
@@ -12,13 +13,17 @@ public class AStar {
 //        form = new ShowForm("Algorithm Simulate", 800, 600);
 //        form.setVisible(true);
 //        setPath();        
-    	ShowForm form1 = new ShowForm ("Dijkstra", 800, 600);
+    	ShowForm form1 = new ShowForm ("Path finding comparator	 ", 800, 600);
+    	
     	form1.setVisible(true);
         Thread thread1 = new Thread() {
         	public void run () {
-        		DijkstraAlgorithmSimulator sim = 
-        				new DijkstraAlgorithmSimulator();
+        		AlgorithmSimulator sim = 
+        				new AStarAlgorithmSimulator();
+        		
+        		
         		form1.addMyContainer(sim.getPainter());
+        		sim.getPainter().setPreferredSize(new Dimension(400, 300));
         		sim.setSimulating(true);
         		sim.run();
         	}

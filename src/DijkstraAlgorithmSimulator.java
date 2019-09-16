@@ -43,7 +43,7 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	public void init () {
 	    try {
 	
-	        Scanner scanner = new Scanner(new File("Map2.inp"));
+	        Scanner scanner = new Scanner(new File("Map3.inp"));
 	        row = scanner.nextInt ();
 	        col = scanner.nextInt ();
 	
