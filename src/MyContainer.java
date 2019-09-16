@@ -49,6 +49,8 @@ class MyContainer extends  Container {
 
                     g.setColor(color);
                     g.fillRect(j * each_width, i * each_height, each_width - 1, each_height - 1);
+                    g.setColor(Color.BLACK);
+                    g.drawRect(j * each_width, i * each_height, each_width - 1, each_height - 1);
                 }
         }
     }

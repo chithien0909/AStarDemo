@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
 
-public class AStarAlgorithmSimulator extends AlgorithmSimulator {
+public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 
 	static final int
 //        VALUE_WALL = 100,
@@ -12,6 +12,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
         VALUE_INFINITY = 32000;
 
 	final int[]
+			
 	    _x_ver = {-1, +1, 0, 0, -1, -1, +1, +1},
 	    _y_hor = {0,  0,  -1, +1, -1, +1, -1, +1};
 	
@@ -114,7 +115,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	        int where = 0;
 	        
 	        for (int i = 0; i<open_list.size(); i++){
-	            int gVal = F[open_list.get(i)];
+	            int gVal = G[open_list.get(i)];
 	
 	            if (min > gVal) {
 	                where = i;
@@ -202,7 +203,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	}
 
 	
-	public AStarAlgorithmSimulator () {		
+	public DijkstraAlgorithmSimulator () {		
 		super ();	
 	}
 		
