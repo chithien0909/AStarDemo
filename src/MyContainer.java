@@ -2,12 +2,15 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
 
-class MyContainer extends  Container {
+import javax.swing.JComponent;
+
+class MyContainer extends JComponent {
 	
 		private 
 			int[][] A = null;
     	private
         	int each_width, each_height;
+    	public static Color LIGHT_BLUE = new Color (51, 204, 255);
     	
     	public void setContent (int[][] content) {
     		A = content;
@@ -20,6 +23,7 @@ class MyContainer extends  Container {
             
             if (A == null)
             	return;
+            
             each_height = getHeight()/ A.length;
             each_width = getWidth() / A[0].length;
             for (int i = 0; i < A.length; i++)
@@ -40,10 +44,10 @@ class MyContainer extends  Container {
                             color = Color.RED; // dest
                             break;                      
                         case -4:
-                        	color = Color.CYAN; // on checking
+                        	color = Color.MAGENTA; // on checking
                         	break;
                         case -5:
-                        	color = Color.BLUE; // 
+                        	color = LIGHT_BLUE; // 
                         	break;
                     }
 

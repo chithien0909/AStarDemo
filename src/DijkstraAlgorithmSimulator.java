@@ -191,6 +191,11 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	    do {
 	        dst_index = prev[dst_index];
 	        result [dst_index/col][dst_index % col] = -1;
+	        try {
+	        	simulate();
+	        } catch (Exception e) {
+	        	
+	        }
 	    } while (dst_index != src_index);
 	        result [dst_index/col][dst_index % col] = -2;
 	        

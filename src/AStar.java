@@ -22,20 +22,23 @@ public class AStar {
         		sim.setSimulating(true);
         		sim.run();
         	}
-        };        
+        };      
+        
         thread1.start();      
         
-        ShowForm form2 = new ShowForm ("A Star", 800, 600);
-        form2.setVisible(true);
-        Thread thread2 = new Thread() {
-        	public void run () {
-        		AStarAlgorithmSimulator sim = 
-        				new AStarAlgorithmSimulator();
-        		form2.addMyContainer(sim.getPainter());
-        		sim.setSimulating(true);
-        		sim.run();
-        	}
-        };        
-        thread2.start();
+//        ShowForm form2 = new ShowForm ("A Star", 800, 600);
+//        form2.setVisible(true);
+//        Thread thread2 = new Thread() {
+//        	public void run () {
+//        		AStarAlgorithmSimulator sim = 
+//        				new AStarAlgorithmSimulator();
+//        		sim.getPainter().setSize(400, 300);
+//        		form2.addMyContainer(sim.getPainter());
+//        		
+//        		sim.setSimulating(true);
+//        		sim.run();
+//        	}
+//        };        
+//        thread2.start();
     }
 }
