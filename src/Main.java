@@ -30,14 +30,11 @@ public class Main {
     	form1.addMyContainer(astar.getPainter());
     	form1.addMyContainer(dijkstra.getPainter());
     	form1.addMyContainer(greedy.getPainter());
-    	
-    	astar.init();
-    	dijkstra.init();
-    	greedy.init();
-    	    	
+    	    	    	
         Thread thread1 = new Thread() {
         	public void run () {
-        		        		        		
+        		
+        		astar.init();
         		astar.setSimulating(true);
         		astar.run();
         	}        
@@ -45,6 +42,7 @@ public class Main {
         
         Thread thread2 = new Thread() {
         	public void run () {        		        		        	
+            	dijkstra.init();
         		dijkstra.setSimulating(true);
         		dijkstra.run();
         	}
@@ -52,6 +50,8 @@ public class Main {
         
         Thread thread3 = new Thread() {
         	public void run () {        		        		        	
+        		
+            	greedy.init();
         		greedy.setSimulating(true);
         		greedy.run();
         	}
@@ -60,7 +60,7 @@ public class Main {
         form1.setOnPlayClickListener(new ShowForm.MyShowFormOnClickListener() {
 			
 			@Override
-			public void onClick(Component comp) {
+			public void onClick(Component comp) {			
 				thread1.start();
 		        thread2.start();
 		        thread3.start();				
