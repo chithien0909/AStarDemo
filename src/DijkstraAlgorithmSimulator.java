@@ -28,6 +28,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        prev;
 	private ArrayList<Integer> open_list;
 	private int closed = 0;
+	long startTime = 0;
 	public boolean isInRange (int x, int y){
 	    return  ((0<=x) && (x<row) && (0<=y) && (y<col));
 	}
@@ -67,6 +68,8 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	
 	public boolean deploy () throws Exception{
 	
+		
+		startTime = System.currentTimeMillis();
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
@@ -191,7 +194,8 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
-        		+ "Path LENGTH: " + len + "</html>");
+        		+ "Path LENGTH: " + len + "<br>"
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 	}
 
 	

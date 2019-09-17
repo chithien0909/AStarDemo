@@ -23,6 +23,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    
 	private ArrayList<Integer> open_list = null;
 	int closed = 0;
+	long startTime = 0;
 	
 	public boolean isInRange (int x, int y){
 	    return  ((0<=x) && (x<row) && (0<=y) && (y<col));
@@ -59,7 +60,9 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	}
 	
 	public boolean deploy () throws Exception{
-	
+		
+		startTime = System.currentTimeMillis();
+		
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
@@ -71,7 +74,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    int
 	            min,
 	            focus_index = 0;
-		   
+		
 	    while (open_list.size() > 0){ // con cai de xet
 	
 	        min = VALUE_INFINITY;
@@ -182,7 +185,8 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
-        		+ "Path LENGTH: " + len);
+        		+ "Path LENGTH: " + len + "<br>"
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 //	    System.out.println ("PATH LENGTH: " + len);
 	}
 

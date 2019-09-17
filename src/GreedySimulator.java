@@ -25,6 +25,8 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	
 	private ArrayList<Integer> open_list = null;
 	private int closed = 0;
+	long startTime = 0;
+	
 	public boolean isInRange (int x, int y){
 	    return  ((0<=x) && (x<row) && (0<=y) && (y<col));
 	}
@@ -65,6 +67,7 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	
 	public boolean deploy () throws Exception{
 	
+		startTime = System.currentTimeMillis();
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
@@ -185,7 +188,8 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
-        		+ "Path LENGTH: " + len);
+        		+ "Path LENGTH: " + len + "<br>" 
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 	}
 
 	

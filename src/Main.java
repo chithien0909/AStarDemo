@@ -37,7 +37,7 @@ public class Main {
                                             
         form1.setOnPlayClickListener(new ShowForm.MyShowFormOnClickListener() {
 			
-			@Override
+			@Override	
 			public void onClick(Component comp) {
 				comp.setEnabled(false);
 			
