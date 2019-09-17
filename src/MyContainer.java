@@ -3,6 +3,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 
 class MyContainer extends JComponent {
 	
@@ -11,7 +12,17 @@ class MyContainer extends JComponent {
     	private
         	int each_width, each_height;
     	public static Color LIGHT_BLUE = new Color (51, 204, 255);
+    	private JLabel logger = null;
     	
+    	public JLabel getLogger () {
+//    		if (! (this.getParent() instanceof ShowForm)) 
+//    			return null;
+//    		ShowForm parent = (ShowForm) this.getParent();
+    		return logger;
+    	}
+    	public void setLogger (JLabel logger) {
+    		this.logger = logger;
+    	}
     	public void setContent (int[][] content) {
     		A = content;
 //    		setBackground (Color.BLACK);
@@ -23,7 +34,7 @@ class MyContainer extends JComponent {
             
             if (A == null) {
             	g.setColor(Color.BLACK);
-                g.drawRect(0, 0, getWidth(), getHeight());                
+                g.drawRect(0, 0, getWidth()-1, getHeight()-1);                
             	return;
             }
             	

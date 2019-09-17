@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
 
-public class GreedySimulator extends AlgorithmSimulator {
+public class GreedySimulator extends PathFindingAlgorithmSimulator {
 
 	static final int
 //        VALUE_WALL = 100,
@@ -17,20 +17,14 @@ public class GreedySimulator extends AlgorithmSimulator {
 	
 	
 	    int[]
-	        A,
+	        
 	        H,
 	        F,
 	        G,
 	        prev;
 	
-	    int[][]
-	        result;
-	
-	    boolean[]
-	        isClose;	
-	    int
-	        row, col, src_x, src_y, dst_x, dst_y;
-	
+	private ArrayList<Integer> open_list = null;
+	private int closed = 0;
 	public boolean isInRange (int x, int y){
 	    return  ((0<=x) && (x<row) && (0<=y) && (y<col));
 	}
@@ -39,38 +33,11 @@ public class GreedySimulator extends AlgorithmSimulator {
 	    return x * col + y;
 	}
 	
-	public void init () {
+	public void init (String fileName) {
 	    try {
 	
-	        Scanner scanner = new Scanner(new File("Map2.inp"));
-	        row = scanner.nextInt ();
-	        col = scanner.nextInt ();
-	
-	        src_x = scanner.nextInt ();
-	        src_y = scanner.nextInt ();
-	        
-	        dst_x = scanner.nextInt ();
-	        dst_y = scanner.nextInt ();
-	
-	        int cell_count = row * col;
-	
-	        A       = new int [cell_count];
-	        isClose = new boolean [cell_count];
-	        result  = new int [row][col];
-	
-	        for (int i = 0; i < cell_count; i++){
-	            A[i] = scanner.nextInt ();
-	            result[i/col][i%col] = A[i];
-	
-	            if (A[i] == 1)
-	                isClose [i] = true;
-	            else 
-	            	isClose [i] = false;
-	        }
-	        
-	        result[dst_x][dst_y] = -3;
-	
-	        scanner.close ();
+	    	super.init (fileName);
+	    	int cell_count = row * col;
 	
 	        H = new int [cell_count];
 	        F = new int [cell_count];
@@ -83,7 +50,7 @@ public class GreedySimulator extends AlgorithmSimulator {
 	                y = 0;
 	                x ++;
 	            }
-	
+	            closed = 0;
 	            G[i] = F[i] = VALUE_INFINITY;
 	        }
 	
@@ -101,7 +68,7 @@ public class GreedySimulator extends AlgorithmSimulator {
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
-	    ArrayList<Integer> open_list = new ArrayList<>();
+	    open_list = new ArrayList<>();
 	    open_list.add(src_index);
 	
 	    F [src_index] = H[src_index];
@@ -135,6 +102,12 @@ public class GreedySimulator extends AlgorithmSimulator {
 	        open_list.remove(where);
 	        isClose [focus_index] = true;	        
 	        result [srcX][srcY] = -5;
+	        ++closed;
+	        this.log("<html> "
+	        		+ "Total nodes: " + row*col + "<br>"
+	        		+ "Closed list size: " + closed + "<br>" 
+	        		+ "Open list size: " + open_list.size());
+	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
 	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
@@ -208,7 +181,11 @@ public class GreedySimulator extends AlgorithmSimulator {
 	    } catch (Exception e) {
 	    	
 	    }
-	    System.out.println("PATH LENGTH: " + len);
+	    this.log("<html>"
+        		+ "Total nodes: " + row*col + "<br>"
+        		+ "Closed list size: " + closed + "<br>" 
+        		+ "Open list size: " + open_list.size() + "<br>"
+        		+ "Path LENGTH: " + len);
 	}
 
 	

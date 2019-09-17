@@ -4,37 +4,39 @@ import java.awt.Dimension;
 public class Main {
 	
 	static ShowForm form = null;
-
-//    public void clearPath () {
-//    	
-//    }
     
     public static void main (String[] args){     
-//        long time = System.currentTimeMillis();        
-//        form = new ShowForm("Algorithm Simulate", 800, 600);
-//        form.setVisible(true);
-//        setPath();
     	
     	ShowForm form1 = new ShowForm ("Path finding comparator	 ", 800, 600);    	
     	form1.setVisible(true);
-    	AlgorithmSimulator 
+    	final PathFindingAlgorithmSimulator 
     		astar = 
 				new AStarAlgorithmSimulator(),
 			dijkstra =
 				new DijkstraAlgorithmSimulator(),
 			greedy =
 				new GreedySimulator();
-    	
-    	
-    	
+//			greed2 = new GreedySimulator ();
+    
     	form1.addMyContainer(astar.getPainter(), "A Star");
     	form1.addMyContainer(dijkstra.getPainter(), "Dijkstra");
     	form1.addMyContainer(greedy.getPainter(), "Greedy");
-    	    	    	
+    	
+    	
+    	
+    	try {
+	    	astar.init    ("Map.inp");
+	    	dijkstra.init ("Map.inp");
+	    	greedy.init   ("Map.inp");
+//	    	greed2.init   ("Map1.inp");	    	
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    		System.exit(-1);
+    	}
+    	
         Thread thread1 = new Thread() {
         	public void run () {
         		
-        		astar.init();
         		astar.setSimulating(true);
         		astar.run();
         	}        
@@ -42,7 +44,7 @@ public class Main {
         
         Thread thread2 = new Thread() {
         	public void run () {        		        		        	
-            	dijkstra.init();
+            	
         		dijkstra.setSimulating(true);
         		dijkstra.run();
         	}
@@ -51,7 +53,6 @@ public class Main {
         Thread thread3 = new Thread() {
         	public void run () {        		        		        	
         		
-            	greedy.init();
         		greedy.setSimulating(true);
         		greedy.run();
         	}
@@ -64,6 +65,21 @@ public class Main {
 				thread1.start();
 		        thread2.start();
 		        thread3.start();				
+			}
+		});
+        
+        form1.setOnInputClickListener(new ShowForm.MyShowFormOnInputListener() {
+			
+			@Override
+			public void onInput(String fileName) {
+				try {
+					astar.init(fileName);
+					dijkstra.init(fileName);
+					greedy.init(fileName);
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		});
         

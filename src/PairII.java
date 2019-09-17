@@ -1,5 +1,5 @@
 
-public class PairII implements Comparable {
+public class PairII implements Comparable { // Này viết để sử dụng Pair<Int, Int>, chứ mặc định không thấy 
 	public int first, second;
 	
 	public PairII () {
