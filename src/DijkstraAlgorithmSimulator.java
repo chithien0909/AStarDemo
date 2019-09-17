@@ -222,8 +222,8 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	}
 		
 	@Override
-	public void run() {
-		init ();
+	public void run () {
+//		init ();
 		try {
 			deploy ();
 			setPath ();

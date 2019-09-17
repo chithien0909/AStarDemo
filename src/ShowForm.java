@@ -13,12 +13,16 @@ public class ShowForm extends JFrame {
     }
     
     public void addMyContainer (MyContainer container) {
-    	add (container);
+    	getContentPane() .add (container);
+    	container.setBounds(0, 0, container.getWidth(), container.getHeight());    	
     }
     
     public ShowForm(String name, int width, int height){
         super(name);
         setSize(width, height);                   
-        setBackground(Color.BLACK);       
+        setBackground(Color.BLACK);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);    
+        setLayout(new GridLayout(1, 1));
+                
     }
 }

@@ -217,8 +217,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	}
 		
 	@Override
-	public void run() {
-		init ();
+	public void run() {		
 		try {
 			deploy ();
 			setPath ();

@@ -14,7 +14,7 @@ class MyContainer extends JComponent {
     	
     	public void setContent (int[][] content) {
     		A = content;
-    		setBackground (Color.BLACK);
+//    		setBackground (Color.BLACK);
     	}
     	
         @Override

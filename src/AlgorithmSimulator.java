@@ -32,5 +32,6 @@ public abstract class AlgorithmSimulator {
 		isSimulating = is;
 	}
 	
+	abstract public void init ();
 	abstract public void run ();
 }

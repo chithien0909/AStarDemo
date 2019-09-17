@@ -217,8 +217,8 @@ public class GreedySimulator extends AlgorithmSimulator {
 	}
 		
 	@Override
-	public void run() {
-		init ();
+	public void run () {
+//		init ();
 		try {
 			deploy ();
 			setPath ();
