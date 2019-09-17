@@ -1,6 +1,6 @@
 import java.awt.Dimension;
 
-public class AStar {
+public class Main {
 	
 	static ShowForm form = null;
 
@@ -12,15 +12,15 @@ public class AStar {
 //        long time = System.currentTimeMillis();        
 //        form = new ShowForm("Algorithm Simulate", 800, 600);
 //        form.setVisible(true);
-//        setPath();        
+//        setPath();
+    	
     	ShowForm form1 = new ShowForm ("Path finding comparator	 ", 800, 600);
     	
     	form1.setVisible(true);
         Thread thread1 = new Thread() {
         	public void run () {
         		AlgorithmSimulator sim = 
-        				new AStarAlgorithmSimulator();
-        		
+        				new AStarAlgorithmSimulator();        		
         		
         		form1.addMyContainer(sim.getPainter());
         		sim.getPainter().setPreferredSize(new Dimension(400, 300));

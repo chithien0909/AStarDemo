@@ -1,5 +1,8 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
@@ -108,21 +111,30 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	    int
 	            min,
 	            focus_index = 0;
-	
+	    
+	    PriorityQueue<PairII> queue
+	    	= new PriorityQueue<>();
+	    
+	    
+	    queue.add(new PairII(0, src_index));
 	    while (open_list.size() > 0){ // con cai de xet
 	
 	        min = VALUE_INFINITY;
 	        int where = 0;
 	        
-	        for (int i = 0; i<open_list.size(); i++){
-	            int gVal = G[open_list.get(i)];
-	
-	            if (min > gVal) {
-	                where = i;
-	                focus_index = open_list.get (i);
-	                min = gVal;
-	            }
-	        }
+	        PairII pivot = queue.poll ();
+	        focus_index = pivot.second;
+//	        System.out.print(focus_index);
+	        		
+//	        for (int i = 0; i<open_list.size(); i++){
+//	            int gVal = G[open_list.get(i)];
+//	
+//	            if (min > gVal) {
+//	                where = i;
+//	                focus_index = open_list.get (i);
+//	                min = gVal;
+//	            }
+//	        }
 	
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
@@ -144,20 +156,14 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	                if (!isClose[index]) {
 	                    if (G[index] == VALUE_INFINITY) {	                    	
 	                        open_list.add(index);  // add if it is unchecked
-	                        result [X][Y] = -4;	                        
-	//                        SwingUtilities.invokeLater(new Runnable() {				
-	//							@Override
-	//							public void run() {
-	//								form.updateView();									
-	//							}
-	//						});
-	//                                                    
+	                        result [X][Y] = -4;	                        	                                
 	                    }
 	                    
 	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1                            
 	                    	G[index] = G[focus_index] + 1;
 	                        F[index] = G[index] + H[index];
-	                        prev[index] = focus_index;                        
+	                        prev[index] = focus_index;
+	                        queue.add (new PairII (G[index], index));
 	                    }
 	                }
 	            }
@@ -187,8 +193,9 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	    int dst_index = getIndex(dst_x, dst_y);
 	
 	    result [dst_index/col][dst_index % col] = -3;
-	    
+	    int len = 0;
 	    do {
+	    	++len;
 	        dst_index = prev[dst_index];
 	        result [dst_index/col][dst_index % col] = -1;
 	        try {
@@ -197,14 +204,16 @@ public class DijkstraAlgorithmSimulator extends AlgorithmSimulator {
 	        	
 	        }
 	    } while (dst_index != src_index);
-	        result [dst_index/col][dst_index % col] = -2;
+	    
+    	++len;
+        result [dst_index/col][dst_index % col] = -2;
 	        
 	    try {
 	    	simulate ();
 	    } catch (Exception e) {
 	    	
 	    }
-	    
+	    System.out.println ("PATH LENGTH: " + len);
 	}
 
 	

@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
 
-public class AStarAlgorithmSimulator extends AlgorithmSimulator {
+public class GreedySimulator extends AlgorithmSimulator {
 
 	static final int
 //        VALUE_WALL = 100,
@@ -116,7 +116,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	        int where = 0;
 	        
 	        for (int i = 0; i<open_list.size(); i++){
-	            int gVal = F[open_list.get(i)];
+	            int gVal = H[open_list.get(i)];
 	
 	            if (min > gVal) {
 	                where = i;
@@ -200,7 +200,7 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	        }
 	    } while (dst_index != src_index);
 	    
-	    ++len;
+    	++len;
         result [dst_index/col][dst_index % col] = -2;
 	        
 	    try {
@@ -208,11 +208,11 @@ public class AStarAlgorithmSimulator extends AlgorithmSimulator {
 	    } catch (Exception e) {
 	    	
 	    }
-	    System.out.println ("PATH LENGTH: " + len);
+	    System.out.println("PATH LENGTH: " + len);
 	}
 
 	
-	public AStarAlgorithmSimulator () {		
+	public GreedySimulator () {		
 		super ();	
 	}
 		
