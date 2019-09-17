@@ -19,7 +19,7 @@ public abstract class AlgorithmSimulator {
 	
 	public void simulate () throws Exception{
 		if (!isSimulating) return; 
-		Thread.sleep(5);
+		Thread.sleep(2);
 		SwingUtilities.invokeLater(new Runnable() {			
 			@Override
 			public void run() {

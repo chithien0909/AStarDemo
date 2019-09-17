@@ -1,3 +1,4 @@
+import java.awt.Component;
 import java.awt.Dimension;
 
 public class Main {
@@ -56,9 +57,16 @@ public class Main {
         	}
         };                          
              
-        thread1.start();
-        thread2.start();
-        thread3.start();
+        form1.setOnPlayClickListener(new ShowForm.MyShowFormOnClickListener() {
+			
+			@Override
+			public void onClick(Component comp) {
+				thread1.start();
+		        thread2.start();
+		        thread3.start();				
+			}
+		});
+        
 //        ShowForm form2 = new ShowForm ("A Star", 800, 600);
 //        form2.setVisible(true);
 //        Thread thread2 = new Thread() {
