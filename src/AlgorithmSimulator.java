@@ -4,6 +4,7 @@ public abstract class AlgorithmSimulator {
 	
 	private MyContainer painter = null;
 	private boolean isSimulating = false;
+	private int defaultSleepTime = 5;
 	
 	public AlgorithmSimulator () {				
 		painter = new MyContainer ();			
@@ -17,9 +18,16 @@ public abstract class AlgorithmSimulator {
 		getPainter ().setContent(content);
 	}
 	
+	public int getDefaultSleepTime () {
+		return defaultSleepTime;
+	}
+	
+	public void setDefaultSleepTime (int ms) {
+		defaultSleepTime = ms;
+	}
 	public void simulate () throws Exception{
 		if (!isSimulating) return; 
-		Thread.sleep(2);
+		Thread.sleep(defaultSleepTime);
 		SwingUtilities.invokeLater(new Runnable() {			
 			@Override
 			public void run() {

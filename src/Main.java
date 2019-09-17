@@ -27,9 +27,9 @@ public class Main {
     	
     	
     	
-    	form1.addMyContainer(astar.getPainter());
-    	form1.addMyContainer(dijkstra.getPainter());
-    	form1.addMyContainer(greedy.getPainter());
+    	form1.addMyContainer(astar.getPainter(), "A Star");
+    	form1.addMyContainer(dijkstra.getPainter(), "Dijkstra");
+    	form1.addMyContainer(greedy.getPainter(), "Greedy");
     	    	    	
         Thread thread1 = new Thread() {
         	public void run () {

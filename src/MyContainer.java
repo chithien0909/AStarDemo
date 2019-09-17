@@ -21,8 +21,12 @@ class MyContainer extends JComponent {
         public void paint (Graphics g) {
             super.paint(g);
             
-            if (A == null)
+            if (A == null) {
+            	g.setColor(Color.BLACK);
+                g.drawRect(0, 0, getWidth(), getHeight());                
             	return;
+            }
+            	
             
             each_height = getHeight()/ A.length;
             each_width = getWidth() / A[0].length;

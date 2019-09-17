@@ -23,9 +23,28 @@ public class ShowForm extends JFrame {
     	onPlayClick = onclick;
     }
     
-    public void addMyContainer (MyContainer container) {
-    	showPanel.add (container);
-//    	container.setBounds(0, 0, container.getWidth(), container.getHeight());    	
+    public void addMyContainer (MyContainer container, String label) {
+    	
+    	JPanel sub = new JPanel ();
+    	sub.setLayout(new GridBagLayout());
+    	
+    	GridBagConstraints c = new GridBagConstraints();    	
+    	c.fill = GridBagConstraints.HORIZONTAL;
+    	c.anchor = GridBagConstraints.NORTH;    	
+    	c.weightx = 2;
+    	c.weighty = 0;
+    	c.gridx = c.gridy = 0;    	
+    	JLabel lbName = new JLabel (label);
+    	lbName.setHorizontalAlignment(SwingConstants.CENTER);
+    	sub.add (lbName, c);
+    	c.anchor = GridBagConstraints.NORTH;
+    	c.fill = GridBagConstraints.BOTH;
+    	c.gridy = 1;    
+    	c.weighty = 1;
+//    	c.ipadx = 200;
+//    	c.ipady = 200;
+    	sub.add (container, c);
+    	showPanel.add (sub);
     }
     
     public ShowForm(String name, int width, int height){
@@ -87,6 +106,7 @@ public class ShowForm extends JFrame {
 			}
 		});
         
+//        showPanel.setLayout(new GridBagLayout());
         GridBagConstraints pnlShowCtr = new GridBagConstraints();
         pnlShowCtr.anchor = GridBagConstraints.NORTH;
         pnlShowCtr.fill = GridBagConstraints.BOTH;
@@ -94,6 +114,6 @@ public class ShowForm extends JFrame {
         pnlShowCtr.weighty = 1;   
         pnlShowCtr.gridy= 1;   
         
-        getContentPane().add(showPanel, pnlShowCtr);        
+        getContentPane().add(showPanel, pnlShowCtr);       
     }
 }
