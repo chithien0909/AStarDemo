@@ -21,8 +21,10 @@ public class ShowForm extends JFrame {
         super(name);
         setSize(width, height);                   
         setBackground(Color.BLACK);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);    
-        setLayout(new GridLayout(1, 1));
-                
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        setLayout(new GridLayout(1, 3));
+        JButton button = new JButton ("Play");
+//        getContentPane ().add (button);
     }
 }
