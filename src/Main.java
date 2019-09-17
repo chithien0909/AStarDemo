@@ -34,37 +34,42 @@ public class Main {
     		System.exit(-1);
     	}
     	
-        Thread thread1 = new Thread() {
-        	public void run () {
-        		
-        		astar.setSimulating(true);
-        		astar.run();
-        	}        
-        };
-        
-        Thread thread2 = new Thread() {
-        	public void run () {        		        		        	
-            	
-        		dijkstra.setSimulating(true);
-        		dijkstra.run();
-        	}
-        };
-        
-        Thread thread3 = new Thread() {
-        	public void run () {        		        		        	
-        		
-        		greedy.setSimulating(true);
-        		greedy.run();
-        	}
-        };                          
-             
+                                            
         form1.setOnPlayClickListener(new ShowForm.MyShowFormOnClickListener() {
 			
 			@Override
-			public void onClick(Component comp) {			
-				thread1.start();
-		        thread2.start();
-		        thread3.start();				
+			public void onClick(Component comp) {
+				comp.setEnabled(false);
+			
+				Thread thread1 = new Thread() {
+		        	public void run () {
+		        		
+		        		astar.setSimulating(true);
+		        		astar.run();        	
+		        	}        
+		        };
+		        
+		        Thread thread2 = new Thread() {
+		        	public void run () {        		        		        	
+		            	
+		        		dijkstra.setSimulating(true);
+		        		dijkstra.run();
+		        	}
+		        };
+		        
+		        Thread thread3 = new Thread() {
+		        	public void run () {        		        		        	
+		        		
+		        		greedy.setSimulating(true);
+		        		greedy.run();
+		        	}
+		        };
+		        
+		        thread1.start ();
+		        thread2.start ();
+		        thread3.start ();
+			
+				comp.setEnabled(true);
 			}
 		});
         
