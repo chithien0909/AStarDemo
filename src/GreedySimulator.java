@@ -1,5 +1,6 @@
 import java.io.File;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import javax.swing.SwingUtilities;
@@ -23,7 +24,7 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        G,
 	        prev;
 	
-	private ArrayList<Integer> open_list = null;
+	private PriorityQueue<PairII> open_list = null;
 	private int closed = 0;
 	long startTime = 0;
 	
@@ -66,29 +67,20 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
-	    open_list = new ArrayList<>();
-	    open_list.add(src_index);
-	
+	    open_list = new PriorityQueue<>();
 	    F [src_index] = H[src_index];
 	    G [src_index] = 0;
 	    int
-	            min,
+//	            min,
 	            focus_index = 0;
-	
+	    	    
+	    open_list.add(new PairII(0, src_index));
 	    while (open_list.size() > 0){ // con cai de xet
 	
-	        min = VALUE_INFINITY;
-	        int where = 0;
+//	        min = VALUE_INFINITY;	        
 	        
-	        for (int i = 0; i<open_list.size(); i++){
-	            int gVal = H[open_list.get(i)];
-	
-	            if (min > gVal) {
-	                where = i;
-	                focus_index = open_list.get (i);
-	                min = gVal;
-	            }
-	        }
+	        PairII pivot = open_list.poll ();
+	        focus_index = pivot.second;
 	
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
@@ -97,7 +89,7 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	            return true;
 	        }
 	
-	        open_list.remove(where);
+	        
 	        isClose [focus_index] = true;	        
 	        result [srcX][srcY] = -5;
 	        ++closed;
@@ -105,6 +97,7 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
 	        		+ "Open list size: " + open_list.size());
+	        
 	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
@@ -114,30 +107,19 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	            if ((isInRange(X, Y))) {
 	                int index = getIndex(X, Y);
 	                if (!isClose[index]) {
-	                    if (G[index] == VALUE_INFINITY) {	                    	
-	                        open_list.add(index);  // add if it is unchecked
-	                        result [X][Y] = -4;	                        
-	//                        SwingUtilities.invokeLater(new Runnable() {				
-	//							@Override
-	//							public void run() {
-	//								form.updateView();									
-	//							}
-	//						});
-	//                                                    
-	                    }
-	                    
-	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1                            
-	                    	G[index] = G[focus_index] + 1;
-	                        F[index] = G[index] + H[index];
-	                        prev[index] = focus_index;                        
-	                    }
+	                	result[X][Y] = -4;
+                    	G[index] = G[focus_index] + 1;
+                        F[index] = G[index] + H[index];
+                        prev[index] = focus_index;
+                        open_list.add (new PairII (H[index], index));
 	                }
+	                
 	            }
 	        }
 	
 	
 	    }
-	
+		    
 	    return false;
 	}
 	

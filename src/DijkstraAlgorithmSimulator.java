@@ -26,7 +26,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        F,
 	        G,
 	        prev;
-	private ArrayList<Integer> open_list;
+	private PriorityQueue<PairII> open_list;
 	private int closed = 0;
 	long startTime = 0;
 	public boolean isInRange (int x, int y){
@@ -63,44 +63,25 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	}
 	
 	public boolean deploy () throws Exception{
-	
-		
+			
 		startTime = System.currentTimeMillis();
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
-	    open_list = new ArrayList<>();
-	    open_list.add(src_index);
-	
+	    open_list = new PriorityQueue<>();
 	    F [src_index] = H[src_index];
 	    G [src_index] = 0;
 	    int
 	            min,
 	            focus_index = 0;
-	    
-	    PriorityQueue<PairII> queue
-	    	= new PriorityQueue<>();
-	    
-	    
-	    queue.add(new PairII(0, src_index));
+	    	    
+	    open_list.add(new PairII(0, src_index));
 	    while (open_list.size() > 0){ // con cai de xet
 	
-	        min = VALUE_INFINITY;
-	        int where = 0;
+	        min = VALUE_INFINITY;	        
 	        
-	        PairII pivot = queue.poll ();
+	        PairII pivot = open_list.poll ();
 	        focus_index = pivot.second;
-//	        System.out.print(focus_index);
-	        		
-//	        for (int i = 0; i<open_list.size(); i++){
-//	            int gVal = G[open_list.get(i)];
-//	
-//	            if (min > gVal) {
-//	                where = i;
-//	                focus_index = open_list.get (i);
-//	                min = gVal;
-//	            }
-//	        }
 	
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
@@ -109,7 +90,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	            return true;
 	        }
 	
-	        open_list.remove(where);
+	        
 	        isClose [focus_index] = true;	        
 	        result [srcX][srcY] = -5;
 	        ++closed;
@@ -127,16 +108,13 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	            if ((isInRange(X, Y))) {
 	                int index = getIndex(X, Y);
 	                if (!isClose[index]) {
-	                    if (G[index] == VALUE_INFINITY) {	                    	
-	                        open_list.add(index);  // add if it is unchecked
-	                        result [X][Y] = -4;	                        	                                
-	                    }
-	                    
-	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1                            
+	                	
+	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1
+	                    	result[X][Y] = -4;
 	                    	G[index] = G[focus_index] + 1;
 	                        F[index] = G[index] + H[index];
 	                        prev[index] = focus_index;
-	                        queue.add (new PairII (G[index], index));
+	                        open_list.add (new PairII (G[index], index));
 	                    }
 	                }
 	            }
