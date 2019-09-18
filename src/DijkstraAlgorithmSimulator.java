@@ -37,8 +37,8 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    return x * col + y;
 	}
 	
-	public void init (String fileName) {
-	    try {
+	public void init (String fileName) throws Exception{
+
 	    	super.init(fileName);	    	
 	    	int cell_count = row * col;
 	    	
@@ -58,10 +58,6 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        }
 	        closed = 0;
 	        prev = new int[cell_count];
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        System.exit(-1); // exit immediately
-	    }
 	    
 	    setContent(result);
 	}

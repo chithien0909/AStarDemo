@@ -61,7 +61,7 @@ public class ShowForm extends JFrame {
     	c.weightx = 2;
     	c.weighty = 0;
     	c.gridx = c.gridy = 0;    	
-    	JLabel lbName = new JLabel (label);
+    	JLabel lbName = new JLabel ("<html> <h2 color=\"red\"> " + label + "</h2> </html>" );
     	lbName.setHorizontalAlignment(SwingConstants.CENTER);
     	sub.add (lbName, c);
     	

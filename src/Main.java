@@ -1,6 +1,8 @@
 import java.awt.Component;
 import java.awt.Dimension;
 
+import javax.swing.JOptionPane;
+
 public class Main {
 	
 	static ShowForm form = null;
@@ -19,7 +21,7 @@ public class Main {
 //			greed2 = new GreedySimulator ();
     
     	form1.addMyContainer(astar.getPainter(), "A Star");
-    	form1.addMyContainer(dijkstra.getPainter(), "Dijkstra");
+    	form1.addMyContainer(dijkstra.getPainter(), "Dijkstra (BFS)");
     	form1.addMyContainer(greedy.getPainter(), "Greedy");
     	
     	
@@ -83,7 +85,9 @@ public class Main {
 					greedy.init(fileName);
 					
 				} catch (Exception e) {
+					
 					e.printStackTrace();
+					JOptionPane.showMessageDialog(form1, e.toString());
 				}
 			}
 		});
