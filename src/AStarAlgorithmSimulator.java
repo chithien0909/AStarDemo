@@ -10,7 +10,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	static final int
 //        VALUE_WALL = 100,
         VALUE_WALKABLE = 1,
-        VALUE_INFINITY = 32000;
+        VALUE_INFINITY = 3200000;
 
 	final int[]
 	    _x_ver = {-1, +1, 0, 0, -1, -1, +1, +1},
@@ -44,7 +44,8 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        G = new int [cell_count];
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
-	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+//	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y));
 	            y++;
 	            if (y>=col) {
 	                y = 0;
@@ -67,30 +68,21 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	
 	    open_list = new PriorityQueue<>();	    
 	
-	    F [src_index] = H[src_index];
 	    G [src_index] = 0;
+	    F [src_index] = G [src_index] + H[src_index];	    
 	    int
 	            min,
 	            focus_index = 0;
 	    
-	    open_list.add(new PairII (0, src_index));    
+	    open_list.add(new PairII (F[src_index], src_index));    
 	    while (open_list.size() > 0){ // con cai de xet
 	
 	        min = VALUE_INFINITY;
-	        int where = 0;
+//	        int where = 0;
 	        PairII pivot = open_list.poll ();
 	        focus_index = pivot.second;
-	        
-//	        for (int i = 0; i<open_list.size(); i++){
-//	            int gVal = F[open_list.get(i)];
-//	
-//	            if (min > gVal) {
-//	                where = i;
-//	                focus_index = open_list.get (i);
-//	                min = gVal;
-//	            }
-//	        }
-	
+	        if (isClose[focus_index])
+	        	continue;
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
 	        
@@ -98,7 +90,6 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	            return true;
 	        }
 	
-//	        open_list.remove(where);
 	        isClose [focus_index] = true;
 	        ++closed;
 	        
@@ -110,7 +101,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
+	        for (int i = 0; i</*_x_ver.length*/ _x_ver.length; i++){
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
@@ -181,6 +172,15 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
         		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 //	    System.out.println ("PATH LENGTH: " + len);
 	}
+	
+	public void setNoPath () {
+		this.log("<html>"
+        		+ "Total nodes: " + row*col + "<br>"
+        		+ "Closed list size: " + closed + "<br>" 
+        		+ "Open list size: " + open_list.size() + "<br>"
+        		+ "<p color=\"red\"> No PATH found </p><br>"
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+	}
 
 	
 	public AStarAlgorithmSimulator () {		
@@ -190,8 +190,10 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	@Override
 	public void run() {		
 		try {
-			deploy ();
-			setPath ();
+			if (deploy ())
+				setPath ();
+			else 
+				setNoPath ();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

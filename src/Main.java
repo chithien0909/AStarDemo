@@ -21,8 +21,8 @@ public class Main {
 //			greed2 = new GreedySimulator ();
     
     	form1.addMyContainer(astar.getPainter(), "A Star");
-    	form1.addMyContainer(dijkstra.getPainter(), "Dijkstra (BFS)");
-    	form1.addMyContainer(greedy.getPainter(), "Greedy");
+    	form1.addMyContainer(dijkstra.getPainter(), "BFS");
+    	form1.addMyContainer(greedy.getPainter(), "Best first search");
     	
     	
     	

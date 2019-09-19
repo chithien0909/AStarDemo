@@ -12,7 +12,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	static final int
 //        VALUE_WALL = 100,
         VALUE_WALKABLE = 1,
-        VALUE_INFINITY = 32000;
+        VALUE_INFINITY = 3200000;
 
 	final int[]
 			
@@ -83,6 +83,9 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        PairII pivot = open_list.poll ();
 	        focus_index = pivot.second;
 	
+	        if (isClose[focus_index])
+	        	continue;
+	        
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
 	        
@@ -102,7 +105,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
+	        for (int i = 0; i<_x_ver.length; i++){
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
@@ -171,6 +174,15 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
         		+ "Path LENGTH: " + len + "<br>"
         		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 	}
+	
+	public void setNoPath () {
+		this.log("<html>"
+        		+ "Total nodes: " + row*col + "<br>"
+        		+ "Closed list size: " + closed + "<br>" 
+        		+ "Open list size: " + open_list.size() + "<br>"
+        		+ "<p color=\"red\"> No PATH found </p><br>"
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+	}
 
 	
 	public DijkstraAlgorithmSimulator () {		
@@ -181,8 +193,11 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	public void run () {
 //		init ();
 		try {
-			deploy ();
-			setPath ();
+			if (deploy ())
+				setPath ();
+			else
+				setNoPath();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

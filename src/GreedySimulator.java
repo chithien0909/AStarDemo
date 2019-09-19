@@ -10,7 +10,7 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	static final int
 //        VALUE_WALL = 100,
         VALUE_WALKABLE = 1,
-        VALUE_INFINITY = 32000;
+        VALUE_INFINITY = 3200000;
 
 	final int[]
 	    _x_ver = {-1, +1, 0, 0, -1, -1, +1, +1},
@@ -46,7 +46,8 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        G = new int [cell_count];
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
-	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+//	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y));
 	            y++;
 	            if (y>=col) {
 	                y = 0;
@@ -81,16 +82,17 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        
 	        PairII pivot = open_list.poll ();
 	        focus_index = pivot.second;
-	
+	        if (isClose[focus_index]) 
+	        	continue;
+	        
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
 	        
 	        if (focus_index == dst_index) {
 	            return true;
 	        }
-	
-	        
-	        isClose [focus_index] = true;	        
+		    
+	        isClose [focus_index] = true;	    
 	        result [srcX][srcY] = -5;
 	        ++closed;
 	        this.log("<html> "
@@ -101,23 +103,19 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
+	        for (int i = 0; i<_x_ver.length; i++){
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
 	                int index = getIndex(X, Y);
 	                if (!isClose[index]) {
-	                	result[X][Y] = -4;
-                    	G[index] = G[focus_index] + 1;
-                        F[index] = G[index] + H[index];
+	                	result[X][Y] = -4;                    	
                         prev[index] = focus_index;
                         open_list.add (new PairII (H[index], index));
 	                }
 	                
 	            }
-	        }
-	
-	
+	        }	
 	    }
 		    
 	    return false;
@@ -169,6 +167,14 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
         		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
 	}
 
+	public void setNoPath () {
+		this.log("<html>"
+        		+ "Total nodes: " + row*col + "<br>"
+        		+ "Closed list size: " + closed + "<br>" 
+        		+ "Open list size: " + open_list.size() + "<br>"
+        		+ "<p color=\"red\"> No PATH found </p><br>"
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+	}
 	
 	public GreedySimulator () {		
 		super ();	
@@ -178,8 +184,10 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	public void run () {
 //		init ();
 		try {
-			deploy ();
-			setPath ();
+			if (deploy ())
+				setPath ();
+			else
+				setNoPath();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
