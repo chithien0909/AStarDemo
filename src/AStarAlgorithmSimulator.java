@@ -101,7 +101,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        result[src_x][src_y] = -2;
 	        simulate ();
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ _x_ver.length; i++){
+	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
