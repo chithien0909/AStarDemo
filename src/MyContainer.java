@@ -69,9 +69,22 @@ class MyContainer extends JComponent {
                     }
 
                     g.setColor(color);
-                    g.fillRect(j * each_width, i * each_height, each_width - 1, each_height - 1);
-                    g.setColor(Color.BLACK);
-                    g.drawRect(j * each_width, i * each_height, each_width - 1, each_height - 1);
+                    g.fillRect(j * each_width, i * each_height, each_width , each_height );
                 }
+            
+            g.setColor(Color.BLACK);
+            int pivot = 0, mxHeight = each_height*A.length-1, mxWidth = each_width*A[0].length-1;
+            for (int i = 0; i<=A[0].length; ++i) {
+            	g.drawLine(pivot, 0, pivot, mxHeight);
+            	pivot += each_width;
+            }
+            
+            
+            
+            pivot = 0;       
+            for (int i = 0; i<=A.length; ++i) {
+            	g.drawLine(0, pivot, mxWidth, pivot);
+            	pivot += each_height;
+            }
         }
     }

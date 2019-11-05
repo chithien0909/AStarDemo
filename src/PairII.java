@@ -13,16 +13,21 @@ public class PairII implements Comparable { // Này viết để sử dụng Pai
 	
 	@Override
 	public int compareTo(Object o) {
-		// TODO Auto-generated method stub
+		
 		PairII obj = (PairII) o;
 		if (first < obj.first) 
 			return -1;
 		if (first > obj.first)
 			return 1;
-		if (second > obj.second)
-			return 1;
 		if (second < obj.second)
 			return -1;
+		if (second > obj.second)
+			return 1;
 		return 0;
+	}
+	
+	public boolean equals(Object o) {
+		PairII __o = (PairII) o;
+		return (__o.first == this.first && __o.second == this.second);	
 	}
 }

@@ -2,6 +2,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.swing.SwingUtilities;
 
@@ -22,7 +25,8 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        G,
 	        prev;
 	    
-	private PriorityQueue<PairII> open_list = null;
+//	private PriorityQueue<PairII> open_list = null;
+	SortedSet<PairII> open_list = null;
 	
 	int closed = 0;
 	long startTime = 0;
@@ -44,13 +48,15 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        G = new int [cell_count];
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
-//	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
-	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y));
+	        	// Tính trước giá trị Heuristic cho từng điểm mmootj
+	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y); // Mahattan distance for heuristic evaluation
+//	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y)); 	
 	            y++;
 	            if (y>=col) {
 	                y = 0;
 	                x ++;
 	            }
+	            H[i] *= 6;
 	            G[i] = F[i] = VALUE_INFINITY;
 	        }
 	        prev = new int[cell_count];
@@ -66,23 +72,26 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
 	
-	    open_list = new PriorityQueue<>();	    
-	
+//	    open_list = new PriorityQueue<>(); // đã từng sử dụng priority queue	    
+	    open_list = new TreeSet<> ();
+	    
 	    G [src_index] = 0;
 	    F [src_index] = G [src_index] + H[src_index];	    
 	    int
 	            min,
 	            focus_index = 0;
 	    
-	    open_list.add(new PairII (F[src_index], src_index));    
-	    while (open_list.size() > 0){ // con cai de xet
+	    open_list.add(new PairII (F[src_index], src_index));   
+	    System.out.println (src_index);
+	    while (open_list.size() > 0){ // Còn một phần tử để xét
 	
 	        min = VALUE_INFINITY;
 //	        int where = 0;
-	        PairII pivot = open_list.poll ();
+	        PairII pivot = (PairII) open_list.first();	 
+	        System.out.println ("Choose node: " +  pivot.second + ", value= " + pivot.first);
 	        focus_index = pivot.second;
-	        if (isClose[focus_index])
-	        	continue;
+	        open_list.remove(pivot);
+	        
 	        int srcX = focus_index / col;
 	        int srcY = focus_index % col;
 	        
@@ -93,29 +102,36 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        isClose [focus_index] = true;
 	        ++closed;
 	        
-	        result [srcX][srcY] = -5;
+	        result [srcX][srcY] = -5; // Gán result này chủ yếu để tô màu
 	        this.log("<html> "
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
 	        		+ "Open list size: " + open_list.size());
 	        result[src_x][src_y] = -2;
-	        simulate ();
+	        simulate ();  // Gọi thủ tục này để gửi lời yêu cầu cập nhật lên giao diện
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ 4; i++){
+	        for (int i = 0; i</*_x_ver.length*/ 4; i++){ // đi được 4 hướng N, W, S, E
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
 	                int index = getIndex(X, Y);
-	                if (!isClose[index]) {
-	                    	                    
-	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1
-	                    	result[X][Y] = -4;
-	                    	G[index] = G[focus_index] + 1;
-	                        F[index] = G[index] + H[index];
-	                        prev[index] = focus_index;
-	                        open_list.add (new PairII (F[index], index));
-	                    }
-	                }
+	                if (A[index] == 1) // Đây là ô nó thực sự bị khóa (ô bức tường trong mê cung
+	                	continue;
+	                	                
+                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1
+                    	// Với A*, dù nút đang nằm trong tập đóng, ta vẫn có thể mở nó ra sau này
+                    	
+                    	if (F[index] != VALUE_INFINITY) {
+    	                	open_list.remove(new PairII (F[index], index));
+    	                }                    	
+                    	result[X][Y] = -4;
+                    	G[index] = G[focus_index] + 1;
+                        F[index] = G[index] + H[index];
+//                        System.out.println ("==> Update to: " +  index + ", value= " + F[index]);
+                        prev[index] = focus_index;
+                        open_list.add (new PairII (F[index], index));
+                        isClose[index] = false;
+                    }	                
 	            }
 	        }
 	

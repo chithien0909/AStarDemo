@@ -24,8 +24,6 @@ public class Main {
     	form1.addMyContainer(dijkstra.getPainter(), "BFS");
     	form1.addMyContainer(greedy.getPainter(), "Best first search");
     	
-    	
-    	
     	try {
 	    	astar.init    ("Map.inp");
 	    	dijkstra.init ("Map.inp");
@@ -33,7 +31,7 @@ public class Main {
 //	    	greed2.init   ("Map1.inp");	    	
     	} catch (Exception e) {
     		e.printStackTrace();
-    		System.exit(-1);
+			JOptionPane.showMessageDialog(form1, e.toString() + "\n You need to have 'map.inp' file in the same directory as the main jar file");
     	}
     	
                                             
