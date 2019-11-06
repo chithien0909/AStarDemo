@@ -22,7 +22,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	
 	    int[]
 	    
-	        H,
+//	        H,
 	        F,
 	        G,
 	        prev;
@@ -42,12 +42,12 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    	super.init(fileName);	    	
 	    	int cell_count = row * col;
 	    	
-	        H = new int [cell_count];
+//	        H = new int [cell_count];
 	        F = new int [cell_count];
 	        G = new int [cell_count];
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
-	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+//	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
 	            y++;
 	            if (y>=col) {
 	                y = 0;
@@ -69,7 +69,7 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    int dst_index = getIndex(dst_x, dst_y);
 	
 	    open_list = new PriorityQueue<>();
-	    F [src_index] = H[src_index];
+//	    F [src_index] = H[src_index];
 	    G [src_index] = 0;
 	    int
 	            min,
@@ -95,14 +95,15 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	
 	        
 	        isClose [focus_index] = true;	        
-	        result [srcX][srcY] = -5;
+	        result [srcX][srcY] = PathFindingAlgorithmSimulator.CLOSED;
+	        result[src_x][src_y] = PathFindingAlgorithmSimulator.SOURCE;
 	        ++closed;
 	        this.log("<html> "
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
 	        		+ "Open list size: " + open_list.size());
 	        
-	        result[src_x][src_y] = -2;
+	        
 	        simulate ();
 	        	        
 	        for (int i = 0; i<4; i++){
@@ -113,9 +114,9 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	                if (!isClose[index]) {
 	                	
 	                    if (G[focus_index] + 1 < G[index]){ // default walking value is 1
-	                    	result[X][Y] = -4;
+	                    	result[X][Y] = PathFindingAlgorithmSimulator.OPENED;
 	                    	G[index] = G[focus_index] + 1;
-	                        F[index] = G[index] + H[index];
+//	                        F[index] = G[index] + H[index];
 	                        prev[index] = focus_index;
 	                        open_list.add (new PairII (G[index], index));
 	                    }

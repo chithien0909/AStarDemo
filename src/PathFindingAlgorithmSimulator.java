@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.File;
 import java.util.Scanner;
 
@@ -5,6 +6,13 @@ import sun.rmi.runtime.Log;
 
 public abstract class PathFindingAlgorithmSimulator extends AlgorithmSimulator {
 	
+	public static final int WALL = 1;
+	public static final int BELONGS_TO_PATH = -1;
+	public static final int SOURCE = -2;
+	public static final int DEST = -3;
+	public static final int OPENED = -4;	
+	public static final int CLOSED= -5;
+ 
 	protected int[] A;
 	protected int[][] result;
 	protected int
@@ -31,7 +39,7 @@ public abstract class PathFindingAlgorithmSimulator extends AlgorithmSimulator {
 
         for (int i = 0; i < cell_count; i++){
             A[i] = scanner.nextInt ();
-            result[i/col][i%col] = A[i];
+            result[i/col][i%col] = (A[i] == 1 ? WALL : 0);
 
             if (A[i] == 1)
                 isClose [i] = true;
@@ -44,7 +52,7 @@ public abstract class PathFindingAlgorithmSimulator extends AlgorithmSimulator {
         scanner.close ();
         
         setContent (result);
-        log("<html> Map size (Height,Width): ("+row+", "+col+") </html>");
+        log("<html> Map size (Height, Width): ("+row+", "+col+") </html>");
         getPainter ().repaint();
 	}
 	

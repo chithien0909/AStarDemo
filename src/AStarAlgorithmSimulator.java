@@ -49,20 +49,19 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
 	        	// Tính trước giá trị Heuristic cho từng điểm mmootj
-	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y); // Mahattan distance for heuristic evaluation
+	            H[i] = (int) Math.sqrt(Math.pow(x - dst_x, 2) + Math.pow(y - dst_y, 2));//Math.abs(x - dst_x) + Math.abs(y - dst_y); // Mahattan distance for heuristic evaluation
 //	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y)); 	
 	            y++;
 	            if (y>=col) {
 	                y = 0;
 	                x ++;
 	            }
-	            H[i] *= 6;
+//	            H[i] *= 6;
 	            G[i] = F[i] = VALUE_INFINITY;
 	        }
 	        prev = new int[cell_count];
 	        
-	        closed = 0;
-	    	    	    
+	        closed = 0;	    	    	    
 	}
 	
 	public boolean deploy () throws Exception{
@@ -71,8 +70,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 		
 	    int src_index = getIndex(src_x, src_y);
 	    int dst_index = getIndex(dst_x, dst_y);
-	
-//	    open_list = new PriorityQueue<>(); // đã từng sử dụng priority queue	    
+		    
 	    open_list = new TreeSet<> ();
 	    
 	    G [src_index] = 0;
@@ -82,9 +80,8 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	            focus_index = 0;
 	    
 	    open_list.add(new PairII (F[src_index], src_index));   
-	    System.out.println (src_index);
-	    while (open_list.size() > 0){ // Còn một phần tử để xét
-	
+//	    System.out.println (src_index);
+	    while (open_list.size() > 0){ // Còn một phần tử để xét	
 	        min = VALUE_INFINITY;
 //	        int where = 0;
 	        PairII pivot = (PairII) open_list.first();	 
@@ -102,15 +99,18 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        isClose [focus_index] = true;
 	        ++closed;
 	        
-	        result [srcX][srcY] = -5; // Gán result này chủ yếu để tô màu
+	        result [srcX][srcY] = PathFindingAlgorithmSimulator.CLOSED; // Gán result này chủ yếu để tô màu
+	        result[src_x][src_y] = PathFindingAlgorithmSimulator.SOURCE;
+	        
 	        this.log("<html> "
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
 	        		+ "Open list size: " + open_list.size());
-	        result[src_x][src_y] = -2;
+	        
 	        simulate ();  // Gọi thủ tục này để gửi lời yêu cầu cập nhật lên giao diện
 	        	        
 	        for (int i = 0; i</*_x_ver.length*/ 4; i++){ // đi được 4 hướng N, W, S, E
+	        	
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];
 	            if ((isInRange(X, Y))) {
@@ -123,14 +123,20 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
                     	
                     	if (F[index] != VALUE_INFINITY) {
     	                	open_list.remove(new PairII (F[index], index));
-    	                }                    	
-                    	result[X][Y] = -4;
+    	                }                    	 
+                    	                    	
                     	G[index] = G[focus_index] + 1;
                         F[index] = G[index] + H[index];
-//                        System.out.println ("==> Update to: " +  index + ", value= " + F[index]);
+                        System.out.println ("==> Update to: " +  index + ", value= " + F[index] +" with g[idx] = " + G[index]);
                         prev[index] = focus_index;
                         open_list.add (new PairII (F[index], index));
-                        isClose[index] = false;
+                        
+                        if (isClose[index]) {
+                        	isClose[index] = false;
+                        	--closed;
+                        }
+                        
+                        result[X][Y] = PathFindingAlgorithmSimulator.OPENED;
                     }	                
 	            }
 	        }

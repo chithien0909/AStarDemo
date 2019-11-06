@@ -30,4 +30,8 @@ public class PairII implements Comparable { // Này viết để sử dụng Pai
 		PairII __o = (PairII) o;
 		return (__o.first == this.first && __o.second == this.second);	
 	}
+	
+	public String toString () {
+		return "("+first+", "+second+")";
+	}
 }
