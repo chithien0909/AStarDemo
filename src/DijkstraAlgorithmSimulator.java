@@ -98,10 +98,10 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        result [srcX][srcY] = PathFindingAlgorithmSimulator.CLOSED;
 	        result[src_x][src_y] = PathFindingAlgorithmSimulator.SOURCE;
 	        ++closed;
-	        this.log("<html> "
+	        this.log("<html> <div style='margin-bottom: 16px'>"
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
-	        		+ "Open list size: " + open_list.size());
+	        		+ "Open list size: " + open_list.size() + "</div></html>");
 	        
 	        
 	        simulate ();
@@ -168,21 +168,21 @@ public class DijkstraAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    } catch (Exception e) {
 	    	
 	    }
-	    this.log("<html>"
+	    this.log("<html><div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "Path LENGTH: " + len + "<br>"
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div></html>");
 	}
 	
 	public void setNoPath () {
-		this.log("<html>"
+		this.log("<html> <div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "<p color=\"red\"> No PATH found </p><br>"
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div></html>");
 	}
 
 	

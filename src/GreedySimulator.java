@@ -95,10 +95,10 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        isClose [focus_index] = true;	    
 	        result [srcX][srcY] = -5;
 	        ++closed;
-	        this.log("<html> "
+	        this.log("<html> <div style='margin-bottom: 16px'>"
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
-	        		+ "Open list size: " + open_list.size());
+	        		+ "Open list size: " + open_list.size() + "</div></html>");
 	        
 	        result[src_x][src_y] = -2;
 	        simulate ();
@@ -159,21 +159,21 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	    } catch (Exception e) {
 	    	
 	    }
-	    this.log("<html>"
+	    this.log("<html> <div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "Path LENGTH: " + len + "<br>" 
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div></html>");
 	}
 
 	public void setNoPath () {
-		this.log("<html>"
+		this.log("<html> <div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "<p color=\"red\"> No PATH found </p><br>"
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div></html>");
 	}
 	
 	public GreedySimulator () {		

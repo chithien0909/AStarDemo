@@ -102,10 +102,10 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        result [srcX][srcY] = PathFindingAlgorithmSimulator.CLOSED; // Gán result này chủ yếu để tô màu
 	        result[src_x][src_y] = PathFindingAlgorithmSimulator.SOURCE;
 	        
-	        this.log("<html> "
+	        this.log("<html> <div style='margin-bottom: 16px'>"
 	        		+ "Total nodes: " + row*col + "<br>"
 	        		+ "Closed list size: " + closed + "<br>" 
-	        		+ "Open list size: " + open_list.size());
+	        		+ "Open list size: " + open_list.size() + "</div></html>");
 	        
 	        simulate ();  // Gọi thủ tục này để gửi lời yêu cầu cập nhật lên giao diện
 	        	        
@@ -186,22 +186,22 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	    	
 	    }
 	    
-	    this.log("<html>"
+	    this.log("<html><div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "Path LENGTH: " + len + "<br>"
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div> </html>");
 //	    System.out.println ("PATH LENGTH: " + len);
 	}
 	
 	public void setNoPath () {
-		this.log("<html>"
+		this.log("<html> <div style='margin-bottom: 16px'>"
         		+ "Total nodes: " + row*col + "<br>"
         		+ "Closed list size: " + closed + "<br>" 
         		+ "Open list size: " + open_list.size() + "<br>"
         		+ "<p color=\"red\"> No PATH found </p><br>"
-        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </html>");
+        		+ "Simulation time: " + (System.currentTimeMillis() - startTime) + "ms </div></html>");
 	}
 
 	

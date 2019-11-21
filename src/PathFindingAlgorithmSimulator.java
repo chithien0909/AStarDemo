@@ -52,7 +52,7 @@ public abstract class PathFindingAlgorithmSimulator extends AlgorithmSimulator {
         scanner.close ();
         
         setContent (result);
-        log("<html> Map size (Height, Width): ("+row+", "+col+") </html>");
+        log("<html> <div style='margin-bottom: 16px'>Map size (Height, Width): ("+row+", "+col+")</div> </html>");
         getPainter ().repaint();
 	}
 	
