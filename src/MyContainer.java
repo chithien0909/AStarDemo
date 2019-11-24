@@ -63,7 +63,7 @@ class MyContainer extends JComponent {
                             color = Color.RED; // dest
                             break;                      
                         case -4:
-                        	color = Color.MAGENTA; // on checking
+                        	color = Color.ORANGE; // on checking
                         	break;
                         case -5:
                         	color = LIGHT_BLUE; // 

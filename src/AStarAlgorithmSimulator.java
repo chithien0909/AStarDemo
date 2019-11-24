@@ -109,7 +109,7 @@ public class AStarAlgorithmSimulator extends PathFindingAlgorithmSimulator {
 	        
 	        simulate ();  // Gọi thủ tục này để gửi lời yêu cầu cập nhật lên giao diện
 	        	        
-	        for (int i = 0; i</*_x_ver.length*/ 4; i++){ // đi được 4 hướng N, W, S, E
+	        for (int i = 0; i< 4; i++){ // đi được 4 hướng N, W, S, E
 	        	
 	            int X = srcX + _x_ver[i];
 	            int Y = srcY + _y_hor[i];

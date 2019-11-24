@@ -46,8 +46,8 @@ public class GreedySimulator extends PathFindingAlgorithmSimulator {
 	        G = new int [cell_count];
 	        int x = 0, y = 0;
 	        for (int i = 0; i<cell_count; i++) {
-//	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
-	        	H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y));
+	            H[i] = Math.abs(x - dst_x) + Math.abs(y - dst_y) - 1; // Mahattan distance for heuristic evaluation
+	        	//H[i] = Math.max(Math.abs (x-dst_x), Math.abs(y-dst_y));
 	            y++;
 	            if (y>=col) {
 	                y = 0;
