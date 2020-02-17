@@ -52,5 +52,6 @@ Here is the map with 41 row and 56 cols, where agent starts from (40, 0) to reac
 ```
 Obviously, there is a way to go
 
-##Here is the screenshot of above test
+## Here is the screenshot of above test
+
 ![AStarDemo Test](screenshot.jpg)
