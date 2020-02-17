@@ -1,8 +1,8 @@
 # AStarDemo
 - Execute the src/Main.java, and the main form is shown with default Map.inp is opened
 - We offer the map structure as follows:
-<height> <width> <src_row> <src_col> <dst_row> <dst_col> (row, col are 0-based index)
-<map_content, with 1 indicates walls>
+<height> <width> <src_row> <src_col> <dst_row> <dst_col> (where src_row, src_col, dst_row and dst_col are 0-based index)
+<map_content, with '1' indicates walls>
 
 ## The screenshot
 ![AStarDemo Test](screenshot.jpg)
